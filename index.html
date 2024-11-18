@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="main.css">
+    <title>Eco-Friendly Travel</title>
+</head>
+
+<body>
+
+    <div class="hero-section">
+        <h1 class="hero-title">Eco-Friendly Travel</h1>
+        <div class="rounded-rectangle">
+            <div class="flight-planner-container">
+                <div class="flight-planner">
+                    <div class="flight-input">
+                        <label for="from">From:</label>
+                        <select id="from">
+                            <option value="Select">Select Airport</option>
+                            <option value="IST">Istanbul (IST)</option>
+                            <option value="LHR">London Heathrow (LHR)</option>
+                            <option value="AMS">Amsterdam Schiphol (AMS)</option>
+                            <option value="JFK">New York John F. Kennedy (JFK)</option>
+                            <option value="FRA">Frankfurt am Main (FRA)</option>
+                            <option value="SVO">Moscow Sheremetyevo (SVO)</option>
+                            <option value="MAD">Madrid (MAD)</option>
+                            <option value="CPT">Cape Town (CPT)</option>
+                            <option value="ZRH">Zurich (ZRH)</option>
+                            <option value="HND">Tokyo Haneda (HND)</option>
+                        </select>
+                    </div>
+
+                    <div class="flight-input">
+                        <label for="to">To:</label>
+                        <select id="to">
+                            <option value="Select">Select Airport</option>
+                            <option value="IST">Istanbul (IST)</option>
+                            <option value="LHR">London Heathrow (LHR)</option>
+                            <option value="AMS">Amsterdam Schiphol (AMS)</option>
+                            <option value="JFK">New York John F. Kennedy (JFK)</option>
+                            <option value="FRA">Frankfurt am Main (FRA)</option>
+                            <option value="SVO">Moscow Sheremetyevo (SVO)</option>
+                            <option value="MAD">Madrid (MAD)</option>
+                            <option value="CPT">Cape Town (CPT)</option>
+                            <option value="ZRH">Zurich (ZRH)</option>
+                            <option value="HND">Tokyo Haneda (HND)</option>
+                        </select>
+                    </div>
+
+                    <div class="flight-input">
+                        <label for="departure">Depart:</label>
+                        <input type="date" id="departure" onkeydown="return false;">
+                    </div>
+                    
+                    <div class="flight-input">
+                        <label for="return">Return:</label>
+                        <input type="date" id="return" onkeydown="return false;">
+                    </div>
+
+                    <div class="flight-input one-way-option">
+                        <label for="one-way" class="one-way-label">
+                            <input type="checkbox" id="one-way" onclick="toggleReturnDate()"> One-way
+                        </label>
+                    </div>
+
+                    <div class="flight-input">
+                        <label for="passengers">Travellers:</label>
+                        <select id="passengers">
+                            <option value="1">1 Passenger</option>
+                            <option value="2">2 Passengers</option>
+                            <option value="3">3 Passengers</option>
+                            <option value="4">4 Passengers</option>
+                            <option value="5">5 Passengers</option>
+                        </select>
+                    </div>
+
+                    <button class="search-button" onclick="searchFlights()">Search Flights</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul id="nav">
+        <li class="nav_link"><a href="index.html">Home</a></li>
+        <li class="nav_link"><a href="vehicles.html">Vehicles</a></li>
+        <li class="nav_link"><a href="locations.html">Locations</a></li>
+    </ul>
+
+    <div class="rounded-container">
+        <div class="main-content">
+            <div class="text-content">
+                <h2>Why Eco-Friendly Travel Matters</h2>
+                <p>Eco-friendly travel, also known as sustainable travel, focuses on reducing these impact of travel on the environment. It encourages travelers to make choices that protect natural resources, reduce pollution, and respect local communities. By choosing eco-friendly options, like taking direct flights, using public transportation, and supporting eco-conscious hotels, we can help protect the environment while still enjoying the adventure of travel.</p>
+                
+                <h2>How you can make a difference</h2>
+                <p>Anyone can be an eco-friendly traveler with a few small changes. Choosing direct flights, for example, reduces the total emissions of your trip by lowering the need for additional takeoffs and landings. Staying in eco-conscious accommodations, like hotels that follow sustainable practices such as recycling, conserving water, and using renewable energy, can also make a big impact. Additionally, supporting local businesses—by eating local food, buying from local shops, and hiring local guides—not only reduces your travel footprint but also helps the local community thrive.</p>
+            </div>
+            
+            <div class="image-content">
+                <img src="Image1.jpg" alt="Eco-Friendly Travel Image">
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>
+            <a href="https://www.flaticon.com/free-icons/travel" title="travel icons">Travel icons created by Freepik - Flaticon</a>
+            <br>
+            <a href="https://www.pexels.com/" title="Pexels Images">Images sourced from Pexels</a>
+        </p>
+    </footer>
+
+    <script>
+        function toggleReturnDate() {
+            const returnDateInput = document.getElementById('return');
+            const oneWayCheckbox = document.getElementById('one-way');
+    
+            if (oneWayCheckbox.checked) {
+                returnDateInput.value = "";
+                returnDateInput.disabled = true;
+                localStorage.setItem("oneWaySelected", "true");
+            } else {
+                returnDateInput.disabled = false;
+                localStorage.setItem("oneWaySelected", "false");
+            }
+        }
+    
+        function setMinDate() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 1);
+    
+            const dd = String(tomorrow.getDate()).padStart(2, '0');
+            const mm = String(tomorrow.getMonth() + 1).padStart(2, '0'); 
+            const yyyy = tomorrow.getFullYear();
+            const formattedDate = `${yyyy}-${mm}-${dd}`;
+    
+            document.getElementById('departure').setAttribute('min', formattedDate);
+            document.getElementById('return').setAttribute('min', formattedDate);
+        }
+    
+        function restoreOneWayState() {
+            const returnDateInput = document.getElementById('return');
+            const oneWayCheckbox = document.getElementById('one-way');
+            const oneWaySelected = localStorage.getItem("oneWaySelected");
+    
+            if (oneWaySelected === "true") {
+                oneWayCheckbox.checked = true;
+                returnDateInput.disabled = true;
+            } else {
+                oneWayCheckbox.checked = false;
+                returnDateInput.disabled = false;
+            }
+        }
+    
+        function searchFlights() {
+            const from = document.getElementById('from').value;
+            const to = document.getElementById('to').value;
+            const departure = document.getElementById('departure').value;
+            const returnDate = document.getElementById('return').value;
+            const passengers = document.getElementById('passengers').value;
+
+            const queryParams = `from=${from}&to=${to}&departure=${departure}&return=${returnDate}&passengers=${passengers}`;
+            window.location.href = `data.html?${queryParams}`;
+        }
+    
+        window.onload = function() {
+            setMinDate();
+            restoreOneWayState();
+        };
+    </script>
+    
+</body>
+</html>

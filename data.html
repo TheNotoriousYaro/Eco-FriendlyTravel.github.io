@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flights</title>
+    <link rel="icon" href="icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+
+    <h1>Flights</h1>
+    <div id="flight-details"> </div>
+
+    <script>
+        const flightSchedule = [
+    { from: "IST", to: "LHR", price: "253€", logo: "TurkishAirlines.png", days: [0, 2, 4], times: [["08:00", "18:30"], ["09:45"], ["15:00"]], aircraft: "Airbus A321neo", emissions: -12 }, 
+    { from: "IST", to: "AMS", price: "179€", logo: "TurkishAirlines.png", days: [1, 3, 5], times: [["10:15"], ["13:45"], ["17:30"]], aircraft: "Boeing 737-800", emissions: -22 },
+    { from: "IST", to: "AMS", price: "179€", logo: "KLM.png", days: [3], times: [["13:45"]], aircraft: "Boeing 737-800", emissions: -19 },
+    { from: "IST", to: "FRA", price: "197€", logo: "Lufthansa.png", days: [0, 1, 2, 3, 4, 5, 6], times: [["11:00"], ["11:00"], ["11:00"], ["11:00"], ["11:00"], ["11:00"], ["10:30", "10:30"]], aircraft: "Airbus A321", emissions: -15 },
+    { from: "IST", to: "SVO", price: "228€", logo: "TurkishAirlines.png", days: [0, 2, 4, 6], times: [["14:00"], ["18:15"], ["09:30"], ["16:00"]], aircraft: "Airbus A321", emissions: -14 },
+    { from: "IST", to: "SVO", price: "228€", logo: "Rossiya.png", days: [0, 2, 4, 6], times: [["14:00"], ["18:15"], ["09:30"], ["16:00"]], aircraft: "Airbus A321", emissions: -10 },
+    { from: "IST", to: "MAD", price: "232€", logo: "Iberia.png", days: [1, 3, 5], times: [["07:45"], ["12:00"], ["20:15"]], aircraft: "Airbus A321neo", emissions: -7 },
+    { from: "IST", to: "ZRH", price: "221€", logo: "SwissAir.png", days: [2, 5], times: [["12:30"], ["15:45"]], aircraft: "Boeing 737-800", emissions: -13 },
+    { from: "IST", to: "HND", price: "652€", logo: "ANA.png", days: [1, 4, 6], times: [["01:20"], ["23:50", "13:45"], ["06:00"]], aircraft: "Boeing 777-300ER", emissions: 5 },
+
+    { from: "LHR", to: "IST", price: "254€", logo: "TurkishAirlines.png", days: [0, 2, 4, 5], times: [["08:45"], ["11:00"], ["17:15"], ["19:30"]], aircraft: "Airbus A330-300", emissions: -8 },
+    { from: "LHR", to: "IST", price: "254€", logo: "BritishAirways.png", days: [2, 4], times: [["08:45"], ["17:15"]], aircraft: "Airbus A330-300", emissions: -3 },
+    { from: "LHR", to: "AMS", price: "142€", logo: "BritishAirways.png", days: [0, 1, 2, 3, 4, 5, 6], times: [["07:00"], ["07:00", "15:30"], ["07:00"], ["07:00"], ["07:00"], ["07:00"], ["07:00"]], aircraft: "Airbus A320", emissions: -12 },
+    { from: "LHR", to: "FRA", price: "158€", logo: "Lufthansa.png", days: [0, 3, 5], times: [["09:00"], ["14:15"], ["18:50"]], aircraft: "Airbus A320neo", emissions: -16 },
+    { from: "LHR", to: "MAD", price: "174€", logo: "Iberia.png", days: [1, 3, 6], times: [["08:30"], ["13:15"], ["17:00"]], aircraft: "Airbus A321neo", emissions: 4 },
+    { from: "LHR", to: "CPT", price: "546€", logo: "BritishAirways.png", days: [2, 4, 5], times: [["22:00"], ["21:30"], ["18:30"]], aircraft: "Airbus A350-1000", emissions: -9 },
+    
+    { from: "AMS", to: "IST", price: "183€", logo: "TurkishAirlines.png", days: [1, 4, 5], times: [["09:30", "18:00"], ["13:45"], ["16:00"]], aircraft: "Airbus A321neo", emissions: -20 },
+    { from: "AMS", to: "LHR", price: "138€", logo: "BritishAirways.png", days: [0, 2, 4, 6], times: [["06:30"], ["13:15"], ["19:00"], ["20:45"]], aircraft: "Boeing 737-800", emissions: -21 },
+    { from: "AMS", to: "FRA", price: "157€", logo: "Lufthansa.png", days: [0, 1, 2, 3, 4, 5, 6], times: [["12:30"], ["12:30", "20:00"], ["12:30"], ["12:30"], ["12:30"], ["12:30"], ["12:30"]], aircraft: "Airbus A320", emissions: -5 },
+    { from: "AMS", to: "MAD", price: "159€", logo: "Iberia.png", days: [2, 3, 5], times: [["10:30"], ["15:45"], ["17:30"]], aircraft: "Boeing 737-800", emissions: -2 },
+    { from: "AMS", to: "JFK", price: "458€", logo: "KLM.png", days: [0, 2, 5, 6], times: [["11:15"], ["14:50"], ["08:30", "17:45"], ["19:00"]], aircraft: "Boeing 787-9", emissions: -17 },
+
+    { from: "JFK", to: "AMS", price: "447€", logo: "AmericanAirlines.png", days: [0, 3, 5], times: [["17:00"], ["12:45"], ["10:15", "22:30"]], aircraft: "Boeing 787-9", emissions: 12 },
+    { from: "JFK", to: "LHR", price: "373€", logo: "AmericanAirlines.png", days: [1, 3, 6], times: [["09:00"], ["20:00"], ["12:00"]], aircraft: "Boeing 777-300ER", emissions: -6 },
+    { from: "JFK", to: "MAD", price: "493€", logo: "AmericanAirlines.png", days: [2, 4], times: [["16:45"], ["21:30"]], aircraft: "Airbus A350-900", emissions: -18 },
+
+    { from: "FRA", to: "IST", price: "198€", logo: "TurkishAirlines.png", days: [0, 1, 2, 3, 4, 5, 6], times: [["09:00"], ["09:00"], ["09:00"], ["09:00"], ["09:00"], ["09:00"], ["09:00"]], aircraft: "Airbus A321", emissions: -3 },
+    { from: "FRA", to: "IST", price: "198€", logo: "Lufthansa.png", days: [0, 1, 2, 3, 4, 5, 6], times: [["09:00"], ["09:00"], ["09:00"], ["09:00"], ["09:00"], ["09:00"], ["09:00"]], aircraft: "Airbus A321", emissions: -4 },
+    { from: "FRA", to: "LHR", price: "159€", logo: "Lufthansa.png", days: [0, 2, 5], times: [["12:15"], ["08:45"], ["14:30"]], aircraft: "Airbus A321", emissions: -15 },
+    { from: "FRA", to: "AMS", price: "161€", logo: "Lufthansa.png", days: [0, 3, 5], times: [["10:30"], ["19:15"], ["16:00"]], aircraft: "Airbus A320", emissions: 8 },
+    { from: "FRA", to: "CPT", price: "553€", logo: "Lufthansa.png", days: [1, 4, 6], times: [["21:15"], ["23:30"], ["20:00"]], aircraft: "Airbus A340-300", emissions: -23 },
+
+    { from: "SVO", to: "IST", price: "229€", logo: "TurkishAirlines.png", days: [1, 3, 5], times: [["14:00"], ["16:15", "20:30"], ["09:00"]], aircraft: "Boeing 737-800", emissions: -11 },
+    { from: "SVO", to: "FRA", price: "207€", logo: "Rossiya.png", days: [0, 2, 4], times: [["15:00"], ["18:30"], ["12:00"]], aircraft: "Airbus A320", emissions: -9 },
+    { from: "SVO", to: "LHR", price: "255€", logo: "Rossiya.png", days: [0, 2, 4], times: [["16:00"], ["20:00"], ["11:15"]], aircraft: "Airbus A321neo", emissions: -10 },
+];
+
+        function getAdjustedDay(date) {
+            const day = date.getDay();
+            return day === 0 ? 6 : day - 1;
+        }
+    
+
+        function displayFlights() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const departure = urlParams.get('from');
+    const arrival = urlParams.get('to');
+    const departureDate = new Date(urlParams.get('departure'));
+    const dayIndex = getAdjustedDay(departureDate);
+    
+    const passengers = parseInt(urlParams.get('passengers')) || 1; 
+
+    const flightDetailsElement = document.getElementById('flight-details');
+    let flightsAvailable = false;
+
+    for (const route of flightSchedule) {
+        if (route.from === departure && route.to === arrival) {
+            const dayPos = route.days.indexOf(dayIndex);
+            if (dayPos !== -1) {
+                const times = route.times[dayPos];
+                if (times.length > 0) {
+                    flightsAvailable = true;
+                    const totalPrice = (parseFloat(route.price.replace('€', '').replace(',', '.')) * passengers).toFixed(2) + '€';
+
+                    times.forEach(time => {
+                        const emissionsLabel = route.emissions > 0 
+                        ? `<span style="color: red;">${route.emissions}% More Emissions 🌿`
+                        : `<span style="color: green;">${Math.abs(route.emissions)}% Less Emissions 🌿`;
+
+                        flightDetailsElement.innerHTML += `
+                            <div class="flight-box">
+                                <div class="airline"><img src="${route.logo}" alt="${route.from} to ${route.to} airline logo"></div>
+                                <div class="flight-details">${route.from} to ${route.to}</div>
+                                <div class="aircraft"> ${route.aircraft}</div>
+                                <div class="emissions">${emissionsLabel}</div>
+                                <div class="flight-details">${time}
+                                <div class="price">${totalPrice}</div>
+                            </div>
+                        `;
+                    });
+                }
+            }
+        }
+    }
+
+    if (!flightsAvailable) {
+        flightDetailsElement.innerHTML = `
+            <div class="no-flights">
+                <h2>No Flights Available</h2>
+                <p>We couldn't find any flights from <strong>${departure}</strong> to <strong>${arrival}</strong>.</p>
+                <p>Try adjusting your filters or search for different dates!</p>
+            </div>
+        `;
+    }
+}
+
+
+
+        window.onload = displayFlights;
+    </script>
+
+</body>
+</html>
